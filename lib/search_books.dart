@@ -12,7 +12,7 @@ class _BookSearchScreenState extends State<BookSearchScreen> {
   TextEditingController searchController = TextEditingController();
 
   Future<void> searchBooks(String query) async {
-    if (query.isEmpty) return; // Evita búsquedas vacías
+    if (query.isEmpty) return; 
 
     String url = "https://openlibrary.org/search.json?q=$query&limit=10";
 
@@ -31,7 +31,10 @@ class _BookSearchScreenState extends State<BookSearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Buscar Libros")),
+      appBar: AppBar(
+        title: Text("Buscar Libros", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),),
+        backgroundColor: Colors.amber[900],
+        ),
       body: Column(
         children: [
           Padding(
@@ -46,7 +49,7 @@ class _BookSearchScreenState extends State<BookSearchScreen> {
                   onPressed: () => searchBooks(searchController.text),
                 ),
               ),
-              onSubmitted: searchBooks, // Busca al presionar "Enter"
+              onSubmitted: searchBooks,
             ),
           ),
           Expanded(
@@ -59,12 +62,25 @@ class _BookSearchScreenState extends State<BookSearchScreen> {
                       String title = book["title"] ?? "Sin título";
                       String author = book["author_name"]?.join(", ") ?? "Desconocido";
                       int? coverId = book["cover_i"];
-                      String imageUrl = coverId != null
-                          ? "https://covers.openlibrary.org/b/id/$coverId-L.jpg"
-                          : "https://via.placeholder.com/100x150"; // Imagen de relleno
 
                       return ListTile(
-                        leading: Image.network(imageUrl, width: 50, height: 75, fit: BoxFit.cover),
+                        leading: Image.network(
+                          coverId != null
+                              ? "https://covers.openlibrary.org/b/id/$coverId-L.jpg"
+                              : "", // Si no hay cover, le damos una URL vacía
+                          width: 50,
+                          height: 140,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            // Si falla la portada (404 o no existe)
+                            return Image.asset(
+                              'assets/default.jpg',
+                              width: 50,
+                              height: 75,
+                              fit: BoxFit.cover,
+                            );
+                          },
+                        ),
                         title: Text(title),
                         subtitle: Text(author),
                       );
@@ -76,3 +92,5 @@ class _BookSearchScreenState extends State<BookSearchScreen> {
     );
   }
 }
+
+
