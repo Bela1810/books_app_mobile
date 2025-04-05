@@ -1,16 +1,58 @@
-import 'package:books_app/home/book_item/book_item.dart';
+import 'package:books_app/home/book_item/widgets/empty_state.dart';
+import 'package:books_app/home/book_item/widgets/loading.dart';
 import 'package:flutter/material.dart';
-// Asegúrate de importar correctamente tu archivo Book.dart
+import 'package:books_app/data/service/book_service.dart';
+import 'package:books_app/domain/model/book_model.dart';
+import 'package:books_app/home/book_item/book_item.dart';
 
-class HomeScreen extends StatelessWidget {
+
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  List<BookModel> _bookList = [];
+  bool _isLoading = false;
+
+  final BookService _bookService = BookService();
+
+  Future<void> _fetchBooks() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final bookList = await _bookService.fetchBooks();
+      await Future.delayed(const Duration(seconds: 2)); // Simula carga
+      setState(() {
+        _bookList = bookList;
+        _isLoading = false;
+      });
+    } catch (error) {
+      setState(() {
+        _isLoading = false;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(error.toString())),
+        );
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchBooks();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFDFCDB9), // fondo de toda la pantalla
+      backgroundColor: const Color(0xFFDFCDB9),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF3E4D4), // encabezado
+        backgroundColor: const Color(0xFFF3E4D4),
         title: const Text(
           'BooksApp',
           style: TextStyle(
@@ -21,39 +63,25 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(16),
-          children: const [
-            BookItem(
-              title: "Pride and Prejudice",
-              author: "Jane Austen",
-              imageUrl: "https://ia802309.us.archive.org/view_archive.php?archive=/20/items/l_covers_0008/l_covers_0008_09.zip&file=0008090270-L.jpg",
-              isFavorite: true,
-            ),
-            BookItem(
-              title: "Pride and Prejudice",
-              author: "Jane Austen",
-              imageUrl: "https://ia802309.us.archive.org/view_archive.php?archive=/20/items/l_covers_0008/l_covers_0008_09.zip&file=0008090270-L.jpg",
-              isFavorite: true,
-            ),
-
-            BookItem(
-              title: "Pride and Prejudice",
-              author: "Jane Austen",
-              imageUrl: "https://ia802309.us.archive.org/view_archive.php?archive=/20/items/l_covers_0008/l_covers_0008_09.zip&file=0008090270-L.jpg",
-              isFavorite: true,
-            ),
-            BookItem(
-              title: "Pride and Prejudice",
-              author: "Jane Austen",
-              imageUrl: "https://ia802309.us.archive.org/view_archive.php?archive=/20/items/l_covers_0008/l_covers_0008_09.zip&file=0008090270-L.jpg",
-              isFavorite: true,
-            ),
-
-             // agrega más si quieres
-          ],
-        ),
+        child: _isLoading
+            ? const Loading()
+            : _bookList.isEmpty
+                ? const EmptyState()
+                : ListView.builder(
+                    padding: const EdgeInsets.all(16),
+                    itemCount: _bookList.length,
+                    itemBuilder: (context, index) {
+                      final book = _bookList[index];
+                      return BookItem(
+                        title: book.title,
+                        author: book.author,
+                        imageUrl: book.imageUrl,
+                        isFavorite: book.isFavorite,
+                      );
+                    },
+                  ),
       ),
     );
   }
 }
+
