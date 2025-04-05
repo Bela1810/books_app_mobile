@@ -14,19 +14,7 @@ class BookService {
 
         final bookList = entries.map((entry) {
           final bookData = entry['work'] ?? {};
-          final title = bookData['title'] ?? 'Sin título';
-          final authorList = bookData['author_names'] ?? ['Autor desconocido'];
-          final author = authorList.isNotEmpty ? authorList[0] : 'Autor desconocido';
-          final coverId = bookData['cover_id'];
-          final imageUrl = coverId != null
-              ? 'https://covers.openlibrary.org/b/id/$coverId-M.jpg'
-              : '';
-
-          return BookModel(
-            title: title,
-            author: author,
-            imageUrl: imageUrl,
-          );
+          return BookModel.fromJson(bookData);
         }).toList();
 
         return bookList;
@@ -38,5 +26,7 @@ class BookService {
     }
   }
 }
+
+
 
 

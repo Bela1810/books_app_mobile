@@ -20,7 +20,10 @@ class BookInfo extends StatelessWidget {
           const SizedBox(height: 10),
           Text(
             author,
-            style: const TextStyle(fontSize: 14, color: Colors.grey),
+            style: const TextStyle(
+              fontSize: 14, 
+              color: Color.fromARGB(255, 119, 119, 119), 
+              fontWeight: FontWeight.bold),  
           ),
         ],
       ),

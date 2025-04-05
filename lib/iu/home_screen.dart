@@ -1,9 +1,10 @@
-import 'package:books_app/home/book_item/widgets/empty_state.dart';
-import 'package:books_app/home/book_item/widgets/loading.dart';
+
+import 'package:books_app/iu/book_item/widgets/empty_state.dart';
+import 'package:books_app/iu/book_item/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:books_app/data/service/book_service.dart';
 import 'package:books_app/domain/model/book_model.dart';
-import 'package:books_app/home/book_item/book_item.dart';
+import 'package:books_app/iu/book_item/book_item.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -72,12 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemCount: _bookList.length,
                     itemBuilder: (context, index) {
                       final book = _bookList[index];
-                      return BookItem(
-                        title: book.title,
-                        author: book.author,
-                        imageUrl: book.imageUrl,
-                        isFavorite: book.isFavorite,
-                      );
+                      return BookItem(book: book);
                     },
                   ),
       ),
