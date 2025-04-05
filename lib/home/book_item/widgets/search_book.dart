@@ -92,5 +92,3 @@ class _BookSearchScreenState extends State<BookSearchScreen> {
     );
   }
 }
-
-
