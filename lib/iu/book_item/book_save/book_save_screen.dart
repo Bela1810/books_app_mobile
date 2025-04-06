@@ -12,32 +12,62 @@ class BookSaveScreen extends StatefulWidget {
 }
 
 class _BookSaveScreenState extends State<BookSaveScreen> {
+
   @override
   Widget build(BuildContext context) {
     final favoriteBooks = widget.allBooks.where((book) => book.isFavorite).toList();
 
     return Scaffold(
+      backgroundColor: Color(0xFFDFCDB9),
       appBar: AppBar(
-        title: const Text('Guardados'),
+        title: const Text('Library', 
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 26.0,
+          color: Colors.white
+        ),),
         backgroundColor: Color(0xFF2D5581),
-        foregroundColor: Colors.white,
       ),
-      body: favoriteBooks.isEmpty
-          ? const Center(child: Text('No tienes libros guardados'))
-          : ListView.builder(
-              itemCount: favoriteBooks.length,
-              itemBuilder: (context, index) {
-                final book = favoriteBooks[index];
-                return BookItemScreen(
-                  book: book,
-                  onFavoritePressed: () {
-                    setState(() {
-                      book.isFavorite = !book.isFavorite;
-                    });
-                  },
-                );
-              },
-            ),
+      body: favoriteBooks.isEmpty? const Center( 
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.menu_book_rounded,
+                size: 80,
+                color: Color(0xFF2D5581),
+              ),
+              SizedBox(height: 16),
+              Text(
+                'Your library is empty, Start to save books!', 
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold, 
+                  fontSize: 18.0,
+                ),
+              ),
+            ],
+          ),
+        )
+      : ListView.builder(
+          itemCount: favoriteBooks.length,
+          itemBuilder: (context, index) {
+            final book = favoriteBooks[index];
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+              child: BookItemScreen(
+                book: book,
+                onFavoritePressed: () {
+                  setState(() {
+                    book.isFavorite = !book.isFavorite;
+                  });
+                },
+              ),
+            );
+          },
+        ),
+
+
     );
   }
 }

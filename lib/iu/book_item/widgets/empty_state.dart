@@ -12,14 +12,14 @@ class EmptyState extends StatelessWidget {
           Icon(
             Icons.library_books_outlined,
             size: 80,
-            color: Colors.grey,
+            color: Color(0xFF2D5581),
           ),
           SizedBox(height: 16),
           Text(
             'No hay libros disponibles',
             style: TextStyle(
               fontSize: 18,
-              color: Colors.grey,
+              color: Color(0xFF2D5581),
             ),
             textAlign: TextAlign.center,
           ),
