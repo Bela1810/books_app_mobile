@@ -1,52 +1,80 @@
 
+import 'package:flutter/material.dart';
+import 'package:books_app/domain/model/book_model.dart';
+import 'package:books_app/data/service/book_service.dart';
 import 'package:books_app/iu/book_item/widgets/empty_state.dart';
 import 'package:books_app/iu/book_item/widgets/loading.dart';
-import 'package:flutter/material.dart';
-import 'package:books_app/data/service/book_service.dart';
-import 'package:books_app/domain/model/book_model.dart';
-import 'package:books_app/iu/book_item/book_item.dart';
-
+import 'package:books_app/iu/book_item/book_item_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final Function(List<BookModel>) onBooksLoaded;
+  final List<BookModel> initialBooks;
+
+  const HomeScreen({
+    super.key,
+    required this.onBooksLoaded, 
+    required this.initialBooks,
+    });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<BookModel> _bookList = [];
+  late List<BookModel> _bookList = [];
   bool _isLoading = false;
 
   final BookService _bookService = BookService();
 
   Future<void> _fetchBooks() async {
+
     setState(() {
       _isLoading = true;
     });
 
     try {
       final bookList = await _bookService.fetchBooks();
-      await Future.delayed(const Duration(seconds: 2)); // Simula carga
+      await Future.delayed(const Duration(seconds: 2)); 
+
+      if (!mounted) return;
+
       setState(() {
         _bookList = bookList;
         _isLoading = false;
       });
+
+      widget.onBooksLoaded(bookList);
     } catch (error) {
+      if (!mounted) return;
+
       setState(() {
         _isLoading = false;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(error.toString())),
-        );
       });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(error.toString())),
+      );
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _fetchBooks();
+  void _pressedFavorite(BookModel book) {
+    setState(() {
+      book.isFavorite = !book.isFavorite;
+    });
+
+    widget.onBooksLoaded(_bookList);
   }
+
+  @override
+    void initState() {
+      super.initState();
+      if (widget.initialBooks.isNotEmpty) {
+        _bookList = widget.initialBooks;
+      } else {
+        _fetchBooks(); 
+      }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -73,11 +101,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemCount: _bookList.length,
                     itemBuilder: (context, index) {
                       final book = _bookList[index];
-                      return BookItem(book: book);
+                      return BookItemScreen(
+                        book: book,
+                        onFavoritePressed: () => _pressedFavorite(book),
+                      );
                     },
                   ),
       ),
     );
   }
 }
+
 

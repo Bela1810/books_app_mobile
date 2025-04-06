@@ -4,7 +4,7 @@ class BookModel {
   final String title;
   final String author;
   final String imageUrl;
-  bool isFavorite = false; 
+  bool isFavorite; 
   final int? coverId;
   final String? firstPublishYear;
   final String editionKeys;
@@ -13,6 +13,7 @@ class BookModel {
     required this.title,
     required this.author,
     required this.imageUrl,
+    this.isFavorite = false,
     this.coverId,
     required this.firstPublishYear,
     required this.editionKeys,

@@ -1,35 +1,27 @@
 import 'package:books_app/domain/model/book_model.dart';
-import 'package:books_app/iu/book_item/book_detail/book_detail_screen.dart';
 import 'package:books_app/iu/book_item/widgets/book_image.dart';
 import 'package:books_app/iu/book_item/widgets/book_info.dart';
+import 'package:books_app/iu/book_item/book_detail/book_detail_screen.dart';
 import 'package:flutter/material.dart';
 
-
-class BookItem extends StatelessWidget {
+class BookItemScreen extends StatelessWidget {
   final BookModel book;
+  final VoidCallback onFavoritePressed;
 
-  const BookItem({
+  const BookItemScreen({
     super.key,
     required this.book,
+    required this.onFavoritePressed,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(
-          PageRouteBuilder(
-            transitionDuration: Duration(milliseconds: 400),
-            pageBuilder: (_, __, ___) => BookDetailScreen(book: book),
-            transitionsBuilder: (_, animation, __, child) {
-              return SlideTransition(
-                position: animation.drive(
-                  Tween(begin: Offset(1.0, 0.0), end: Offset.zero)
-                      .chain(CurveTween(curve: Curves.easeInOut)),
-                ),
-                child: child,
-              );
-            },
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => BookDetailScreen(book: book),
           ),
         );
       },
@@ -46,11 +38,17 @@ class BookItem extends StatelessWidget {
             BookImage(imageUrl: book.imageUrl),
             const SizedBox(width: 25),
             Expanded(
-              child: BookInfo(title: book.title, author: book.author),
+              child: BookInfo(
+                title: book.title,
+                author: book.author,
+              ),
             ),
-            Icon(
-              Icons.bookmark_border_sharp,
-              color: book.isFavorite ? Colors.red : Color(0xFF546A7B),
+            GestureDetector(
+              onTap: onFavoritePressed,
+              child: Icon(
+                book.isFavorite ? Icons.bookmark : Icons.bookmark_border_sharp,
+                color: book.isFavorite ? Colors.red : const Color(0xFF2D5581),
+              ),
             ),
           ],
         ),
@@ -58,5 +56,9 @@ class BookItem extends StatelessWidget {
     );
   }
 }
+
+
+
+
 
 
