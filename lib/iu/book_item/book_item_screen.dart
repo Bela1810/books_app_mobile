@@ -47,7 +47,7 @@ class BookItemScreen extends StatelessWidget {
               onTap: onFavoritePressed,
               child: Icon(
                 book.isFavorite ? Icons.bookmark : Icons.bookmark_border_sharp,
-                color: book.isFavorite ? Colors.red : const Color(0xFF2D5581),
+                color: book.isFavorite ? Color.fromARGB(255, 168, 2, 21) : Color(0xFF2D5581), size: 35.0,
               ),
             ),
           ],

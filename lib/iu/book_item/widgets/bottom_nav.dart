@@ -45,11 +45,11 @@ class _NavigationBarAppState extends State<NavigationBarApp> {
         onDestinationSelected: _onItemTapped,
         destinations: const [
           NavigationDestination(
-              icon: Icon(Icons.home, color:Color(0xFF2D5581)), label: 'Home'),
+              icon: Icon(Icons.home, size: 30.0,color:Color(0xFF2D5581)), label: 'Home'),
           NavigationDestination(
-              icon: Icon(Icons.search, color: Color(0xFF2D5581)), label: 'Search'),
+              icon: Icon(Icons.search,  size: 30.0,color: Color(0xFF2D5581)), label: 'Search'),
           NavigationDestination(
-              icon: Icon(Icons.book_rounded, color: Color(0xFF2D5581)), label: 'Library'),
+              icon: Icon(Icons.book_rounded, size: 30.0, color: Color(0xFF2D5581)), label: 'Library'),
         ],
       ),
     );
