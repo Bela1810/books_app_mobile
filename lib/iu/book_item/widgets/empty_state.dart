@@ -16,7 +16,7 @@ class EmptyState extends StatelessWidget {
           ),
           SizedBox(height: 16),
           Text(
-            'No hay libros disponibles',
+            'No books',
             style: TextStyle(
               fontSize: 18,
               color: Color(0xFF2D5581),
