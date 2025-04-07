@@ -20,9 +20,9 @@ class BookModel {
   });
 
   factory BookModel.fromJson(Map<String, dynamic> json) {
-    final title = json['title'] ?? 'Sin título';
-    final authorList = json['author_names'] ?? ['Autor desconocido'];
-    final author = authorList.isNotEmpty ? authorList[0] : 'Autor desconocido';
+    final title = json['title'] ?? 'No title';
+    final authorList = json['author_names'] ?? [''];
+    final author = authorList.isNotEmpty ? authorList[0] : "Unknown";
     final coverId = json['cover_id'];
     final imageUrl = coverId != null
         ? 'https://covers.openlibrary.org/b/id/$coverId-M.jpg'

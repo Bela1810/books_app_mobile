@@ -84,7 +84,7 @@ class BookSearchScreenState extends State<BookSearchScreen> {
                     itemBuilder: (context, index) {
                       var book = books[index];
                       String title = book["title"] ?? "No title";
-                      String author = book["author_name"]?.join(", ") ?? "No author";
+                      String author = book["author_name"]?.join(", ") ?? "Unknown";
                       int? coverId = book["cover_i"];
 
                       return Padding(

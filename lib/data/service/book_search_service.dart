@@ -14,7 +14,7 @@ class BookSearchService {
       Map<String, dynamic> data = jsonDecode(response.body);
       return data["docs"];
     } else {
-      throw Exception("Error al buscar libros");
+      throw Exception("Error Searching Books");
     }
   }
 }

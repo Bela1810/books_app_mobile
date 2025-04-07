@@ -19,10 +19,10 @@ class BookService {
 
         return bookList;
       } else {
-        throw Exception('No se pudieron obtener los libros. Código: ${response.statusCode}');
+        throw Exception('Error Loading books. Code: ${response.statusCode}');
       }
     } catch (error) {
-      throw Exception('Ocurrió un error procesando los datos del API');
+      throw Exception('Error with API');
     }
   }
 }
