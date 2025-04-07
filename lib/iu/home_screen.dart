@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: const Color(0xFFF3E4D4),
         title: const Text(
-          'BooksApp',
+          'BooksApp 📚',
           style: TextStyle(
             color: Color(0xFF2D5581),
             fontWeight: FontWeight.bold,

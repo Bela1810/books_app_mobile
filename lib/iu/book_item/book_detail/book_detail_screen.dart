@@ -42,76 +42,75 @@ class BookDetailScreen extends StatelessWidget {
                   ),
                 ),
               ),
-
               const SizedBox(height: 20),
-
               Container(
-                padding: const EdgeInsets.all(100),
+                padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
                   color: Colors.white,
-
-                ),
-                child: Column(
-                  children: [
-                    Text(
-                      book.title,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      book.author,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        color: Color.fromARGB(255, 119, 119, 119),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      book.coverId?.toString() ?? 'Sin cover ID',
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        color: Color.fromARGB(255, 119, 119, 119),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      book.editionKeys,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        color: Color.fromARGB(255, 119, 119, 119),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      book.editionKeys,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        color: Color.fromARGB(255, 119, 119, 119),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      book.firstPublishYear.toString(),
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        color: Color.fromARGB(255, 119, 119, 119),
-                        fontWeight: FontWeight.bold,
-                      ),
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 10,
+                      offset: Offset(0, 5),
                     ),
                   ],
                 ),
-                
-              ),
-
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: Text(
+                        book.title,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Center(
+                      child: Text(
+                        book.author,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          color: Color.fromARGB(255, 119, 119, 119),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                      "📚 Cover ID:",
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    Text(
+                      book.coverId?.toString() ?? 'Sin cover ID',
+                      style: TextStyle(fontSize: 16, color: Color.fromARGB(255, 119, 119, 119)),
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      "📅 Publish Year:",
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    Text(
+                      book.firstPublishYear?.toString() ?? 'No year',
+                      style: TextStyle(fontSize: 16, color: Color.fromARGB(255, 119, 119, 119)),
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      "🗂️ Editions:",
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    Text(
+                      book.editionKeys.replaceAll(",", ", "),
+                      style: TextStyle(fontSize: 16, color: Color.fromARGB(255, 119, 119, 119)),
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
         ),

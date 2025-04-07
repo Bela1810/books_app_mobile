@@ -20,7 +20,7 @@ class _BookSaveScreenState extends State<BookSaveScreen> {
     return Scaffold(
       backgroundColor: Color(0xFFDFCDB9),
       appBar: AppBar(
-        title: const Text('Library', 
+        title: const Text('Library 📖', 
         style: TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 26.0,
@@ -53,8 +53,9 @@ class _BookSaveScreenState extends State<BookSaveScreen> {
           itemCount: favoriteBooks.length,
           itemBuilder: (context, index) {
             final book = favoriteBooks[index];
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            return Container(
+              margin: const EdgeInsets.symmetric(horizontal: 10),
+              padding: const EdgeInsets.all(5),
               child: BookItemScreen(
                 book: book,
                 onFavoritePressed: () {

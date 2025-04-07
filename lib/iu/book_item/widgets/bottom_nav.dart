@@ -40,7 +40,6 @@ class _NavigationBarAppState extends State<NavigationBarApp> {
       body: pages[_selectedIndex],
       bottomNavigationBar: NavigationBar(
         backgroundColor: Color(0xFFF3E4D4),
-        indicatorColor: Color.fromARGB(155, 255, 255, 255),
         selectedIndex: _selectedIndex,
         onDestinationSelected: _onItemTapped,
         destinations: const [
